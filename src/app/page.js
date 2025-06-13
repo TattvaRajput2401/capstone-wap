@@ -27,7 +27,7 @@ export default function HomePage() {
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Image
-            src="/TrackEat.jpeg" // Replace with your custom logo path
+            src="/TrackEat.jpeg"
             alt="Logo"
             width={50}
             height={50}
@@ -158,17 +158,69 @@ export default function HomePage() {
       {/* Features Section */}
       <section
         style={{
-          padding: '50px 20px',
+          padding: '0 20px 50px 20px',
           backgroundColor: '#1E1E1E',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        <h2 style={{ fontSize: '2rem', color: '#4CAF50' }}>Features</h2>
-        <p style={{ fontSize: '1.2rem', color: '#B0B0B0', margin: '20px 0' }}>
-          Explore the amazing features of our app, designed to help you stay on track with your nutrition goals.
-        </p>
+        <ul style={{ maxWidth: '700px', listStyle: 'none', padding: 0, margin: 0 }}>
+          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Meal Logging:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Quickly record your daily meals and snacks with an intuitive interface.
+              </span>
+            </div>
+          </li>
+          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Personalized Suggestions:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Receive tailored meal and nutrition recommendations based on your goals.
+              </span>
+            </div>
+          </li>
+          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Progress Tracking:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Monitor your calorie intake, macros, and progress over time with clear charts.
+              </span>
+            </div>
+          </li>
+          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Barcode Scanning:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Instantly add foods by scanning barcodes for quick and accurate logging.
+              </span>
+            </div>
+          </li>
+          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Goal Setting:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Set daily calorie and nutrient targets to stay motivated and on track.
+              </span>
+            </div>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
+            <div>
+              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Data Privacy:</span>
+              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
+                Your information is securely stored and never shared without your consent.
+              </span>
+            </div>
+          </li>
+        </ul>
       </section>
-
-      {/* Contact Us Section */}
       <section
         style={{
           padding: '50px 20px',
