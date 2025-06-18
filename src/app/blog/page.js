@@ -98,59 +98,22 @@ export default function BlogPage() {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#121212',
-        color: '#E0E0E0',
-        minHeight: '100vh',
-        margin: 0,
-        padding: 0,
-      }}
-    >
+    <div>
       {/* Navbar */}
-      <nav
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '10px 20px',
-          backgroundColor: '#1E1E1E',
-        }}
-      >
+      <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link href="/">
             <Image src="/TrackEat.jpeg" alt="Logo" width={50} height={50} style={{ cursor: 'pointer' }} />
           </Link>
-          <h1 style={{ marginLeft: '10px', fontSize: '1.5rem', color: '#4CAF50' }}>
+          <h1 style={{ marginLeft: '10px', fontSize: '1.5rem', color: 'var(--primary-color)' }}>
             Nutrition Tracker
           </h1>
         </div>
-        <div style={{
-          display: 'flex',
-          gap: '20px',
-          justifyContent: 'center',
-          flex: 1
-        }}>
-          <Link href="/" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            Home
-          </Link>
-          <Link href="/about" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            About
-          </Link>
-          <Link href="/services" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            Services
-          </Link>
-          <Link href="/blog" style={{
-            color: '#4CAF50',
-            textDecoration: 'underline',
-            fontWeight: 'bold',
-            background: '#232323',
-            borderRadius: '4px',
-            padding: '4px 12px'
-          }}>
-            Blog
-          </Link>
+        <div className="nav-links">
+          <Link href="/" className="nav-link">Home</Link>
+          <Link href="/about" className="nav-link">About</Link>
+          <Link href="/services" className="nav-link">Services</Link>
+          <Link href="/blog" className="nav-link active">Blog</Link>
         </div>
         <div>
           {loggedIn && user ? (
@@ -170,24 +133,25 @@ export default function BlogPage() {
                   alt="Profile"
                   width={40}
                   height={40}
-                  style={{ borderRadius: '50%', objectFit: 'cover', background: '#333' }}
+                  style={{ borderRadius: '50%', objectFit: 'cover', background: '#333', transition: 'box-shadow 0.2s' }}
                 />
-                <span style={{ color: '#4CAF50', fontWeight: 'bold', fontSize: '1rem' }}>
+                <span style={{ color: 'var(--primary-color)', fontWeight: 'bold', fontSize: '1rem' }}>
                   {user.name}
                 </span>
-                <svg width="16" height="16" style={{ fill: '#4CAF50' }} viewBox="0 0 20 20">
+                <svg width="16" height="16" style={{ fill: 'var(--primary-color)' }} viewBox="0 0 20 20">
                   <path d="M5.25 7.5L10 12.5L14.75 7.5H5.25Z" />
                 </svg>
               </div>
               {dropdownOpen && (
                 <div
+                  className="dropdown-menu"
                   style={{
                     position: 'absolute',
                     top: '110%',
                     right: 0,
-                    background: '#232323',
+                    background: 'var(--card-bg)',
                     borderRadius: '6px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                    boxShadow: 'var(--shadow)',
                     minWidth: '160px',
                     zIndex: 100,
                     padding: '8px 0'
@@ -198,7 +162,7 @@ export default function BlogPage() {
                     style={{
                       width: '100%',
                       background: 'none',
-                      color: '#E0E0E0',
+                      color: 'var(--foreground)',
                       border: 'none',
                       padding: '12px 20px',
                       textAlign: 'left',
@@ -214,7 +178,7 @@ export default function BlogPage() {
                     style={{
                       width: '100%',
                       background: 'none',
-                      color: '#FF5252',
+                      color: 'var(--accent)',
                       border: 'none',
                       padding: '12px 20px',
                       textAlign: 'left',
@@ -230,31 +194,12 @@ export default function BlogPage() {
           ) : (
             <>
               <Link href="/login">
-                <button
-                  style={{
-                    marginRight: '10px',
-                    padding: '10px 20px',
-                    backgroundColor: '#4CAF50',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button className="btn" style={{ marginRight: '10px' }}>
                   Login
                 </button>
               </Link>
               <Link href="/signup">
-                <button
-                  style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#4CAF50',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button className="btn">
                   Sign Up
                 </button>
               </Link>
@@ -273,23 +218,24 @@ export default function BlogPage() {
           minHeight: '320px',
           background: 'linear-gradient(rgba(18,18,18,0.8),rgba(18,18,18,0.8)), url("/blog-hero.jpg") center/cover no-repeat',
           padding: '60px 0 60px 0',
-          marginBottom: '40px'
+          marginBottom: '40px',
+          animation: 'fadeIn 1s'
         }}
       >
-        <h2 style={{ color: '#4CAF50', fontSize: '2.5rem', marginBottom: '18px', textAlign: 'center' }}>
+        <h2 style={{ color: 'var(--primary-color)', fontSize: '2.5rem', marginBottom: '18px', textAlign: 'center', animation: 'fadeInUp 1.1s' }}>
           Our Blog
         </h2>
-        <p style={{ color: '#E0E0E0', fontSize: '1.2rem', lineHeight: '1.6', maxWidth: '600px', textAlign: 'center' }}>
+        <p style={{ color: 'var(--foreground)', fontSize: '1.2rem', lineHeight: '1.6', maxWidth: '600px', textAlign: 'center', animation: 'fadeInUp 1.2s' }}>
           Explore the latest trends, insights, and stories from our experts. Inspiring ideas and industry insights for every reader.
         </p>
       </section>
 
       {/* Blog Carousels */}
-      <section style={{ maxWidth: '700px', margin: '0 auto 40px auto', padding: '0 20px' }}>
+      <section style={{ maxWidth: '700px', margin: '0 auto 40px auto', padding: '0 20px', animation: 'fadeInUp 1.2s' }}>
         <div style={{
-          background: '#232323',
+          background: 'var(--card-bg)',
           borderRadius: '12px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          boxShadow: 'var(--shadow)',
           padding: '32px 24px',
           marginBottom: '32px',
           display: 'flex',
@@ -301,13 +247,13 @@ export default function BlogPage() {
           <button
             aria-label="Previous blog"
             onClick={handlePrev}
+            className="btn"
             style={{
               background: '#181818',
-              border: 'none',
               borderRadius: '50%',
               width: '36px',
               height: '36px',
-              color: '#4CAF50',
+              color: 'var(--primary-color)',
               fontSize: '1.5rem',
               cursor: 'pointer',
               display: 'flex',
@@ -317,10 +263,10 @@ export default function BlogPage() {
             }}
           >&lt;</button>
           <div style={{ flex: '1 1 320px', minWidth: '220px', maxWidth: '340px', textAlign: 'left' }}>
-            <h3 style={{ color: '#4CAF50', fontSize: '1.3rem', marginBottom: '10px' }}>{blogs[currentBlog].title}</h3>
-            <p style={{ color: '#B0B0B0', fontSize: '1.05rem', marginBottom: '10px' }}>{blogs[currentBlog].description}</p>
-            <p style={{ color: '#E0E0E0', fontWeight: 'bold', marginBottom: '10px' }}>By {blogs[currentBlog].author}</p>
-            <Link href={blogs[currentBlog].link} style={{ color: '#4CAF50', textDecoration: 'underline', fontWeight: 'bold' }}>
+            <h3 style={{ color: 'var(--primary-color)', fontSize: '1.3rem', marginBottom: '10px' }}>{blogs[currentBlog].title}</h3>
+            <p style={{ color: 'var(--secondary-color)', fontSize: '1.05rem', marginBottom: '10px' }}>{blogs[currentBlog].description}</p>
+            <p style={{ color: 'var(--foreground)', fontWeight: 'bold', marginBottom: '10px' }}>By {blogs[currentBlog].author}</p>
+            <Link href={blogs[currentBlog].link} style={{ color: 'var(--primary-color)', textDecoration: 'underline', fontWeight: 'bold' }}>
               Read More
             </Link>
           </div>
@@ -336,13 +282,13 @@ export default function BlogPage() {
           <button
             aria-label="Next blog"
             onClick={handleNext}
+            className="btn"
             style={{
               background: '#181818',
-              border: 'none',
               borderRadius: '50%',
               width: '36px',
               height: '36px',
-              color: '#4CAF50',
+              color: 'var(--primary-color)',
               fontSize: '1.5rem',
               cursor: 'pointer',
               display: 'flex',
@@ -355,8 +301,8 @@ export default function BlogPage() {
       </section>
 
       {/* Newsletter Signup */}
-      <section style={{ maxWidth: '500px', margin: '0 auto 40px auto', padding: '0 20px', textAlign: 'center' }}>
-        <h3 style={{ color: '#4CAF50', fontSize: '1.3rem', marginBottom: '10px' }}>Subscribe to Our Newsletter</h3>
+      <section style={{ maxWidth: '500px', margin: '0 auto 40px auto', padding: '0 20px', textAlign: 'center', animation: 'fadeInUp 1.3s' }}>
+        <h3 style={{ color: 'var(--primary-color)', fontSize: '1.3rem', marginBottom: '10px' }}>Subscribe to Our Newsletter</h3>
         <form
           onSubmit={e => {
             e.preventDefault();
@@ -371,23 +317,19 @@ export default function BlogPage() {
             style={{
               padding: '10px',
               fontSize: '1rem',
-              border: '1px solid #4CAF50',
+              border: '1px solid var(--primary-color)',
               borderRadius: '4px',
               backgroundColor: '#181818',
-              color: '#E0E0E0',
+              color: 'var(--foreground)',
               width: '220px'
             }}
           />
           <button
             type="submit"
+            className="btn"
             style={{
               padding: '10px 20px',
               fontSize: '1rem',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
             }}
           >
             Subscribe
@@ -405,7 +347,7 @@ export default function BlogPage() {
           marginTop: '40px',
         }}
       >
-        <div style={{
+        <div className="footer-content" style={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
@@ -413,24 +355,24 @@ export default function BlogPage() {
           marginBottom: '18px'
         }}>
           <div>
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Quick Links</h4>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Quick Links</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              <li><Link href="/" style={{ color: '#B0B0B0', textDecoration: 'none' }}>Home</Link></li>
-              <li><Link href="/about" style={{ color: '#B0B0B0', textDecoration: 'none' }}>About Us</Link></li>
-              <li><Link href="/services" style={{ color: '#B0B0B0', textDecoration: 'none' }}>Services</Link></li>
-              <li><Link href="/blog" style={{ color: '#B0B0B0', textDecoration: 'none' }}>Blog</Link></li>
-              <li><Link href="/privacy" style={{ color: '#B0B0B0', textDecoration: 'none' }}>Privacy Policy</Link></li>
-              <li><Link href="/terms" style={{ color: '#B0B0B0', textDecoration: 'none' }}>Terms of Service</Link></li>
+              <li><Link href="/" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>Home</Link></li>
+              <li><Link href="/about" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>About Us</Link></li>
+              <li><Link href="/services" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>Services</Link></li>
+              <li><Link href="/blog" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>Blog</Link></li>
+              <li><Link href="/privacy" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>Privacy Policy</Link></li>
+              <li><Link href="/terms" style={{ color: 'var(--secondary-color)', textDecoration: 'none' }}>Terms of Service</Link></li>
             </ul>
           </div>
           <div>
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Contact</h4>
-            <p style={{ margin: 0, color: '#B0B0B0' }}>Bengaluru, India</p>
-            <p style={{ margin: 0, color: '#B0B0B0' }}>+91 98765 43210</p>
-            <p style={{ margin: 0, color: '#B0B0B0' }}>support@nutritiontracker.com</p>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Contact</h4>
+            <p style={{ margin: 0, color: 'var(--secondary-color)' }}>Bengaluru, India</p>
+            <p style={{ margin: 0, color: 'var(--secondary-color)' }}>+91 98765 43210</p>
+            <p style={{ margin: 0, color: 'var(--secondary-color)' }}>support@nutritiontracker.com</p>
           </div>
           <div>
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Follow Us</h4>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Follow Us</h4>
             <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <Image src="/social/facebook.svg" alt="Facebook" width={24} height={24} />
@@ -447,7 +389,7 @@ export default function BlogPage() {
             </div>
           </div>
         </div>
-           <p style={{ color: '#777', marginTop: '16px', fontSize: '0.98rem' }}>
+        <p style={{ color: '#777', marginTop: '16px', fontSize: '0.98rem' }}>
           &copy; {new Date().getFullYear()} Nutrition Tracker. All rights reserved.
         </p>
       </footer>

@@ -7,7 +7,12 @@
   --secondary-color: #B0B0B0;
   --input-background: #1E1E1E;
   --input-border: #4CAF50;
-  --font-sans: Arial, Helvetica, sans-serif;
+  --card-bg: #232323;
+  --accent: #FF5252;
+  --font-sans: 'Inter', Arial, Helvetica, sans-serif;
+  --shadow: 0 2px 16px rgba(0,0,0,0.18);
+  --radius: 10px;
+  --transition: 0.25s cubic-bezier(.4,0,.2,1);
 }
 
 body {
@@ -16,65 +21,143 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 40px;
+a, button {
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 
-header h1 {
-  margin-top: 20px;
-  font-size: 2rem;
-  color: var(--primary-color);
-}
-
-section {
-  margin-bottom: 40px;
-}
-
-section h2 {
-  font-size: 1.5rem;
-  color: var(--primary-color);
-  text-align: center;
-}
-
-section p {
-  font-size: 1rem;
-  color: var(--secondary-color);
-  text-align: center;
-}
-
-input[type="text"] {
-  width: 80%;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  background-color: var(--input-background);
-  color: var(--foreground);
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+button, .btn {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius);
   cursor: pointer;
-}
-
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
+  box-shadow: var(--shadow);
   font-size: 1rem;
-  color: var(--secondary-color);
+  padding: 10px 24px;
+  font-family: inherit;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+button:hover, .btn:hover {
+  background: #388e3c;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 24px #4CAF5040;
 }
 
-footer {
-  text-align: center;
-  margin-top: 40px;
-  color: #777;
+input, select, textarea {
+  border-radius: var(--radius);
+  border: 1px solid var(--input-border);
+  background: var(--input-background);
+  color: var(--foreground);
+  padding: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border var(--transition), box-shadow var(--transition);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px #4caf5040;
+}
+
+.card, .carousel-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover, .carousel-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 32px #4CAF5040;
+}
+
+.navbar {
+  background: #1E1E1E;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex: 1;
+}
+.nav-link {
+  color: var(--foreground);
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: background var(--transition), color var(--transition);
+}
+.nav-link.active, .nav-link:focus {
+  color: var(--primary-color);
+  background: var(--card-bg);
+  font-weight: bold;
+  text-decoration: underline;
+}
+.nav-link:hover {
+  background: #232323;
+  color: var(--primary-color);
+}
+
+.dropdown-menu {
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    gap: 10px;
+  }
+  .card, .carousel-card {
+    min-width: 180px !important;
+    max-width: 90vw !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar, .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .navbar {
+    padding: 10px 8px;
+  }
+  .hero-content, .hero-img {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+  .carousel-card {
+    min-width: 90vw !important;
+    max-width: 95vw !important;
+  }
+}
+
+@media (max-width: 500px) {
+  h1, h2, h3 {
+    font-size: 1.2rem !important;
+  }
+  .navbar {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .footer-content {
+    flex-direction: column;
+    gap: 18px;
+  }
 }

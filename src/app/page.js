@@ -22,7 +22,6 @@ export default function HomePage() {
     }
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -39,7 +38,7 @@ export default function HomePage() {
 
   const handleGetStarted = () => {
     if (localStorage.getItem('loggedIn') === 'true') {
-      router.push('/content/content');
+      router.push('/content');
     } else {
       router.push('/login');
     }
@@ -50,7 +49,7 @@ export default function HomePage() {
     setLoggedIn(false);
     setUser(null);
     setDropdownOpen(false);
-    router.refresh?.(); // For Next.js 13+ to refresh the client component state
+    router.refresh?.();
   };
 
   const handleDeleteAccount = () => {
@@ -63,51 +62,20 @@ export default function HomePage() {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#121212',
-        color: '#E0E0E0',
-        margin: '0',
-        padding: '0',
-        minHeight: '100vh',
-        overflowY: 'scroll',
-      }}
-    >
+    <div>
       {/* Navbar */}
-      <nav
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '10px 20px',
-          backgroundColor: '#1E1E1E',
-        }}
-      >
+      <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Image
-            src="/TrackEat.jpeg"
-            alt="Logo"
-            width={50}
-            height={50}
-          />
-          <h1 style={{ marginLeft: '10px', fontSize: '1.5rem', color: '#4CAF50' }}>
+          <Image src="/TrackEat.jpeg" alt="Logo" width={50} height={50} />
+          <h1 style={{ marginLeft: '10px', fontSize: '1.5rem', color: 'var(--primary-color)' }}>
             Nutrition Tracker
           </h1>
         </div>
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <Link href="/" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            Home
-          </Link>
-          <Link href="/about" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            About
-          </Link>
-          <Link href="/services" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            Services
-          </Link>
-          <Link href="/blog" style={{ color: '#E0E0E0', textDecoration: 'none' }}>
-            Blog
-          </Link>
+        <div className="nav-links">
+          <Link href="/" className="nav-link active">Home</Link>
+          <Link href="/about" className="nav-link">About</Link>
+          <Link href="/services" className="nav-link">Services</Link>
+          <Link href="/blog" className="nav-link">Blog</Link>
         </div>
         <div>
           {loggedIn && user ? (
@@ -127,24 +95,26 @@ export default function HomePage() {
                   alt="Profile"
                   width={40}
                   height={40}
-                  style={{ borderRadius: '50%', objectFit: 'cover', background: '#333' }}
+                  style={{ borderRadius: '50%', objectFit: 'cover', background: '#333', transition: 'box-shadow 0.2s' }}
+                  className="profile-img"
                 />
-                <span style={{ color: '#4CAF50', fontWeight: 'bold', fontSize: '1rem' }}>
+                <span style={{ color: 'var(--primary-color)', fontWeight: 'bold', fontSize: '1rem' }}>
                   {user.name}
                 </span>
-                <svg width="16" height="16" style={{ fill: '#4CAF50' }} viewBox="0 0 20 20">
+                <svg width="16" height="16" style={{ fill: 'var(--primary-color)' }} viewBox="0 0 20 20">
                   <path d="M5.25 7.5L10 12.5L14.75 7.5H5.25Z" />
                 </svg>
               </div>
               {dropdownOpen && (
                 <div
+                  className="dropdown-menu"
                   style={{
                     position: 'absolute',
                     top: '110%',
                     right: 0,
-                    background: '#232323',
+                    background: 'var(--card-bg)',
                     borderRadius: '6px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                    boxShadow: 'var(--shadow)',
                     minWidth: '160px',
                     zIndex: 100,
                     padding: '8px 0'
@@ -155,7 +125,7 @@ export default function HomePage() {
                     style={{
                       width: '100%',
                       background: 'none',
-                      color: '#E0E0E0',
+                      color: 'var(--foreground)',
                       border: 'none',
                       padding: '12px 20px',
                       textAlign: 'left',
@@ -171,7 +141,7 @@ export default function HomePage() {
                     style={{
                       width: '100%',
                       background: 'none',
-                      color: '#FF5252',
+                      color: 'var(--accent)',
                       border: 'none',
                       padding: '12px 20px',
                       textAlign: 'left',
@@ -187,31 +157,12 @@ export default function HomePage() {
           ) : (
             <>
               <Link href="/login">
-                <button
-                  style={{
-                    marginRight: '10px',
-                    padding: '10px 20px',
-                    backgroundColor: '#4CAF50',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button className="btn" style={{ marginRight: '10px' }}>
                   Login
                 </button>
               </Link>
               <Link href="/signup">
-                <button
-                  style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#4CAF50',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                  }}
-                >
+                <button className="btn">
                   Sign Up
                 </button>
               </Link>
@@ -226,24 +177,23 @@ export default function HomePage() {
           textAlign: 'center',
           padding: '50px 20px',
           backgroundColor: '#1E1E1E',
+          animation: 'fadeIn 0.8s',
         }}
       >
-        <h2 style={{ fontSize: '2.5rem', color: '#4CAF50' }}>
+        <h2 style={{ fontSize: '2.5rem', color: 'var(--primary-color)', animation: 'fadeInUp 0.8s' }}>
           Your Nutrition Companion
         </h2>
-        <p style={{ fontSize: '1.2rem', color: '#B0B0B0', margin: '20px 0' }}>
+        <p style={{ fontSize: '1.2rem', color: 'var(--secondary-color)', margin: '20px 0', animation: 'fadeInUp 1s' }}>
           Track your meals, get personalized suggestions, and achieve your fitness goals.
         </p>
         <button
           onClick={handleGetStarted}
+          className="btn"
           style={{
             padding: '15px 30px',
             fontSize: '1rem',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
+            marginTop: '18px',
+            animation: 'fadeInUp 1.2s'
           }}
         >
           Get Started
@@ -258,7 +208,7 @@ export default function HomePage() {
           textAlign: 'center',
         }}
       >
-        <h3 style={{ color: '#4CAF50', fontSize: '2rem', marginBottom: '20px' }}>
+        <h3 style={{ color: 'var(--primary-color)', fontSize: '2rem', marginBottom: '20px' }}>
           Features
         </h3>
         <div
@@ -270,45 +220,21 @@ export default function HomePage() {
             marginTop: '20px',
           }}
         >
-          <div
-            style={{
-              backgroundColor: '#232323',
-              borderRadius: '8px',
-              padding: '30px',
-              width: '280px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-            }}
-          >
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Meal Tracking</h4>
-            <p style={{ color: '#B0B0B0' }}>
+          <div className="card" style={{ width: '280px', padding: '30px' }}>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Meal Tracking</h4>
+            <p style={{ color: 'var(--secondary-color)' }}>
               Log your daily meals and monitor your calorie intake with ease.
             </p>
           </div>
-          <div
-            style={{
-              backgroundColor: '#232323',
-              borderRadius: '8px',
-              padding: '30px',
-              width: '280px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-            }}
-          >
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Personalized Suggestions</h4>
-            <p style={{ color: '#B0B0B0' }}>
+          <div className="card" style={{ width: '280px', padding: '30px' }}>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Personalized Suggestions</h4>
+            <p style={{ color: 'var(--secondary-color)' }}>
               Get meal and nutrition suggestions tailored to your goals.
             </p>
           </div>
-          <div
-            style={{
-              backgroundColor: '#232323',
-              borderRadius: '8px',
-              padding: '30px',
-              width: '280px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-            }}
-          >
-            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Progress Tracking</h4>
-            <p style={{ color: '#B0B0B0' }}>
+          <div className="card" style={{ width: '280px', padding: '30px' }}>
+            <h4 style={{ color: 'var(--primary-color)', marginBottom: '10px' }}>Progress Tracking</h4>
+            <p style={{ color: 'var(--secondary-color)' }}>
               Visualize your progress and stay motivated on your journey.
             </p>
           </div>
