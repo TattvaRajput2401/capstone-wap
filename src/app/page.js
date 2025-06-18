@@ -1,8 +1,67 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+    setLoggedIn(isLoggedIn);
+    if (isLoggedIn) {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      setUser(userData);
+    } else {
+      setUser(null);
+    }
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
+  const handleGetStarted = () => {
+    if (localStorage.getItem('loggedIn') === 'true') {
+      router.push('/content/content');
+    } else {
+      router.push('/login');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedIn');
+    setLoggedIn(false);
+    setUser(null);
+    setDropdownOpen(false);
+    router.refresh?.(); // For Next.js 13+ to refresh the client component state
+  };
+
+  const handleDeleteAccount = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('loggedIn');
+    setLoggedIn(false);
+    setUser(null);
+    setDropdownOpen(false);
+    router.refresh?.();
+  };
+
   return (
     <div
       style={{
@@ -11,7 +70,7 @@ export default function HomePage() {
         color: '#E0E0E0',
         margin: '0',
         padding: '0',
-        height: '100vh',
+        minHeight: '100vh',
         overflowY: 'scroll',
       }}
     >
@@ -51,35 +110,113 @@ export default function HomePage() {
           </Link>
         </div>
         <div>
-          <Link href="/login">
-            <button
-              style={{
-                marginRight: '10px',
-                padding: '10px 20px',
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Login
-            </button>
-          </Link>
-          <Link href="/signup">
-            <button
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Sign Up
-            </button>
-          </Link>
+          {loggedIn && user ? (
+            <div style={{ position: 'relative', display: 'inline-block' }} ref={dropdownRef}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  cursor: 'pointer',
+                  userSelect: 'none'
+                }}
+                onClick={() => setDropdownOpen((open) => !open)}
+              >
+                <Image
+                  src="/profile-placeholder.png"
+                  alt="Profile"
+                  width={40}
+                  height={40}
+                  style={{ borderRadius: '50%', objectFit: 'cover', background: '#333' }}
+                />
+                <span style={{ color: '#4CAF50', fontWeight: 'bold', fontSize: '1rem' }}>
+                  {user.name}
+                </span>
+                <svg width="16" height="16" style={{ fill: '#4CAF50' }} viewBox="0 0 20 20">
+                  <path d="M5.25 7.5L10 12.5L14.75 7.5H5.25Z" />
+                </svg>
+              </div>
+              {dropdownOpen && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '110%',
+                    right: 0,
+                    background: '#232323',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                    minWidth: '160px',
+                    zIndex: 100,
+                    padding: '8px 0'
+                  }}
+                >
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      width: '100%',
+                      background: 'none',
+                      color: '#E0E0E0',
+                      border: 'none',
+                      padding: '12px 20px',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      borderBottom: '1px solid #333'
+                    }}
+                  >
+                    Log Out
+                  </button>
+                  <button
+                    onClick={handleDeleteAccount}
+                    style={{
+                      width: '100%',
+                      background: 'none',
+                      color: '#FF5252',
+                      border: 'none',
+                      padding: '12px 20px',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      fontSize: '16px'
+                    }}
+                  >
+                    Delete Account
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link href="/login">
+                <button
+                  style={{
+                    marginRight: '10px',
+                    padding: '10px 20px',
+                    backgroundColor: '#4CAF50',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Login
+                </button>
+              </Link>
+              <Link href="/signup">
+                <button
+                  style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#4CAF50',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Sign Up
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -97,160 +234,98 @@ export default function HomePage() {
         <p style={{ fontSize: '1.2rem', color: '#B0B0B0', margin: '20px 0' }}>
           Track your meals, get personalized suggestions, and achieve your fitness goals.
         </p>
-        <Link href="/login">
-          <button
-            style={{
-              padding: '15px 30px',
-              fontSize: '1rem',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            Get Started
-          </button>
-        </Link>
-      </section>
-
-      {/* Testimonials Section */}
-      <section
-        style={{
-          display: 'flex',
-          overflowX: 'scroll',
-          gap: '20px',
-          padding: '20px',
-          backgroundColor: '#1E1E1E',
-        }}
-      >
-        {[
-          { name: 'John Doe', text: 'This app changed my life!' },
-          { name: 'Jane Smith', text: 'Highly recommend for tracking meals.' },
-          { name: 'Alice Johnson', text: 'Easy to use and very helpful.' },
-          { name: 'Bob Brown', text: 'A must-have for fitness enthusiasts.' },
-          { name: 'Emily Davis', text: 'Great features and user-friendly.' },
-        ].map((testimonial, index) => (
-          <div
-            key={index}
-            style={{
-              minWidth: '300px',
-              padding: '20px',
-              backgroundColor: '#333',
-              borderRadius: '8px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#E0E0E0',
-              fontSize: '1rem',
-              textAlign: 'center',
-            }}
-          >
-            <p style={{ fontStyle: 'italic' }}>&quot;{testimonial.text}&quot;</p>
-            <p style={{ marginTop: '10px', fontWeight: 'bold', color: '#4CAF50' }}>
-              - {testimonial.name}
-            </p>
-          </div>
-        ))}
+        <button
+          onClick={handleGetStarted}
+          style={{
+            padding: '15px 30px',
+            fontSize: '1rem',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          Get Started
+        </button>
       </section>
 
       {/* Features Section */}
       <section
         style={{
-          padding: '0 20px 50px 20px',
-          backgroundColor: '#1E1E1E',
-          display: 'flex',
-          justifyContent: 'center',
+          padding: '40px 20px',
+          backgroundColor: '#181818',
+          textAlign: 'center',
         }}
       >
-        <ul style={{ maxWidth: '700px', listStyle: 'none', padding: 0, margin: 0 }}>
-          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Meal Logging:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Quickly record your daily meals and snacks with an intuitive interface.
-              </span>
-            </div>
-          </li>
-          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Personalized Suggestions:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Receive tailored meal and nutrition recommendations based on your goals.
-              </span>
-            </div>
-          </li>
-          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Progress Tracking:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Monitor your calorie intake, macros, and progress over time with clear charts.
-              </span>
-            </div>
-          </li>
-          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Barcode Scanning:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Instantly add foods by scanning barcodes for quick and accurate logging.
-              </span>
-            </div>
-          </li>
-          <li style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Goal Setting:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Set daily calorie and nutrient targets to stay motivated and on track.
-              </span>
-            </div>
-          </li>
-          <li style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <span style={{ color: '#4CAF50', fontWeight: 'bold', marginRight: '12px', fontSize: '1.5rem' }}>•</span>
-            <div>
-              <span style={{ fontWeight: 'bold', color: '#E0E0E0' }}>Data Privacy:</span>
-              <span style={{ color: '#B0B0B0', marginLeft: '6px' }}>
-                Your information is securely stored and never shared without your consent.
-              </span>
-            </div>
-          </li>
-        </ul>
-      </section>
-      <section
-        style={{
-          padding: '50px 20px',
-          backgroundColor: '#1E1E1E',
-        }}
-      >
-        <h2 style={{ fontSize: '2rem', color: '#4CAF50' }}>Contact Us</h2>
-        <p style={{ fontSize: '1.2rem', color: '#B0B0B0', margin: '20px 0' }}>
-          Have questions? Reach out to us anytime, and we&apos;ll be happy to assist you.
-        </p>
+        <h3 style={{ color: '#4CAF50', fontSize: '2rem', marginBottom: '20px' }}>
+          Features
+        </h3>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '30px',
+            marginTop: '20px',
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#232323',
+              borderRadius: '8px',
+              padding: '30px',
+              width: '280px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            }}
+          >
+            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Meal Tracking</h4>
+            <p style={{ color: '#B0B0B0' }}>
+              Log your daily meals and monitor your calorie intake with ease.
+            </p>
+          </div>
+          <div
+            style={{
+              backgroundColor: '#232323',
+              borderRadius: '8px',
+              padding: '30px',
+              width: '280px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            }}
+          >
+            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Personalized Suggestions</h4>
+            <p style={{ color: '#B0B0B0' }}>
+              Get meal and nutrition suggestions tailored to your goals.
+            </p>
+          </div>
+          <div
+            style={{
+              backgroundColor: '#232323',
+              borderRadius: '8px',
+              padding: '30px',
+              width: '280px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            }}
+          >
+            <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>Progress Tracking</h4>
+            <p style={{ color: '#B0B0B0' }}>
+              Visualize your progress and stay motivated on your journey.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
       <footer
         style={{
-          textAlign: 'center',
-          padding: '20px',
           backgroundColor: '#1E1E1E',
           color: '#B0B0B0',
+          textAlign: 'center',
+          padding: '20px 0',
+          marginTop: '40px',
         }}
       >
         <p>&copy; {new Date().getFullYear()} Nutrition Tracker. All rights reserved.</p>
-        <div style={{ marginTop: '10px' }}>
-          <Link href="/privacy" style={{ color: '#4CAF50', textDecoration: 'none', marginRight: '15px' }}>
-            Privacy Policy
-          </Link>
-          <Link href="/terms" style={{ color: '#4CAF50', textDecoration: 'none' }}>
-            Terms of Service
-          </Link>
-        </div>
       </footer>
     </div>
   );
