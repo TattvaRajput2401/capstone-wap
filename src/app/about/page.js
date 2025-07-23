@@ -9,25 +9,25 @@ const teamMembers = [
   {
     name: 'Aarav Sharma',
     role: 'Founder & CEO',
-    photo: '/team/aarav.jpg',
+    photo: '/aarav.jpg',
     bio: 'Aarav is passionate about nutrition and technology. He leads the team with a vision for healthier living.',
   },
   {
     name: 'Priya Patel',
     role: 'Lead Nutritionist',
-    photo: '/team/priya.jpg',
+    photo: '/priya.jpg',
     bio: 'Priya brings 10+ years of experience in nutrition science and helps design our meal plans.',
   },
   {
     name: 'Rahul Verma',
     role: 'Full Stack Developer',
-    photo: '/team/rahul.jpg',
+    photo: '/rahul.jpg',
     bio: 'Rahul builds robust and scalable features for our platform, ensuring a seamless user experience.',
   },
   {
     name: 'Sneha Kapoor',
     role: 'UI/UX Designer',
-    photo: '/team/sneha.jpg',
+    photo: '/sneha.jpg',
     bio: 'Sneha crafts beautiful and intuitive interfaces that make healthy living easy and fun.',
   },
 ];

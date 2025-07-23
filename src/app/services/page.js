@@ -8,25 +8,25 @@ import { useRouter } from 'next/navigation';
 const services = [
   {
     title: 'Personalized Meal Plans',
-    image: '/services/meal-plan.jpg',
+    image: '/meal-plan.jpg',
     short: 'Custom meal plans tailored to your goals and preferences.',
     details: 'Our personalized meal plans are crafted by expert nutritionists to fit your dietary needs, lifestyle, and health goals. Get daily meal suggestions, grocery lists, and nutrition breakdowns.',
   },
   {
     title: 'Calorie & Macro Tracking',
-    image: '/services/calorie-tracking.jpg',
+    image: '/calorie-tracking.jpg',
     short: 'Easily track your calories, macros, and nutrients.',
     details: 'Track every meal and snack with our intuitive calorie and macro tracker. Visualize your daily intake, set targets, and monitor your progress with detailed analytics.',
   },
   {
     title: 'Expert Consultations',
-    image: '/services/consultation.jpg',
+    image: '/consultation.jpg',
     short: 'Book sessions with certified nutritionists and dietitians.',
     details: 'Connect with certified experts for one-on-one consultations. Get personalized advice, meal reviews, and ongoing support to help you stay on track.',
   },
   {
     title: 'Community Support',
-    image: '/services/community.jpg',
+    image: '/community.jpg',
     short: 'Join a supportive community of health enthusiasts.',
     details: 'Share your journey, ask questions, and get motivated by our vibrant community. Participate in challenges, share recipes, and celebrate your milestones together.',
   },

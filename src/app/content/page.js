@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import food1 from "/public/food2.png"
 
 // Nutritionix API constants (replace with your own key/appId)
 const NUTRITIONIX_APP_ID = '3d787046';
@@ -286,8 +287,8 @@ export default function ContentPage() {
             }}
           >
             <h3 style={{ color: 'var(--primary-color)', marginBottom: '8px' }}>{foodData.food_name}</h3>
-            <img
-              src={foodData.photo?.thumb || '/food-placeholder.png'}
+            <Image
+              src={foodData.photo?.thumb || food1}
               alt={foodData.food_name}
               style={{
                 width: '80px',
@@ -324,7 +325,7 @@ export default function ContentPage() {
             animation: 'fadeInUp 1.5s'
           }}
         >
-          <h2 style={{ color: 'var(--primary-color)', marginBottom: '16px', textAlign: 'center' }}>Today's Log</h2>
+          <h2 style={{ color: 'var(--primary-color)', marginBottom: '16px', textAlign: 'center' }}>Today&lsquo;s Log</h2>
           {log.length === 0 ? (
             <p style={{ color: 'var(--secondary-color)', textAlign: 'center' }}>No food logged yet.</p>
           ) : (
@@ -381,7 +382,7 @@ export default function ContentPage() {
             animation: 'fadeInUp 1.6s'
           }}
         >
-          <h2 style={{ color: 'var(--primary-color)', marginBottom: '16px' }}>Today's Progress</h2>
+          <h2 style={{ color: 'var(--primary-color)', marginBottom: '16px' }}>Today&lsquo;s Progress</h2>
           <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
             <div>
               <div style={{ color: 'var(--secondary-color)' }}>Calories</div>
